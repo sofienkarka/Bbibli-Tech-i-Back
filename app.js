@@ -4,6 +4,7 @@ const app=express();
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const authAPI = require ('./Routes/authAPI')
+const LivresAPI=require('./Routes/LivreAPI')
 
 
 app.use(logger('dev'));
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/auth', authAPI);
 
+app.use('/Livres',LivresAPI);
 
 
 
