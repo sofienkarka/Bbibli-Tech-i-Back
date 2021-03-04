@@ -1,12 +1,15 @@
 const db=require('./DataBase/Connect')
 const express = require('express');
+const cors = require('cors')
 const app=express();
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const authAPI = require ('./Routes/authAPI')
 const LivresAPI=require('./Routes/LivreAPI')
+const listbooksV=require('./Routes/listbooksV')
 
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -14,6 +17,7 @@ app.use(cookieParser());
 app.use('/auth', authAPI);
 
 app.use('/Livres',LivresAPI);
+// app.use('/listbooksV',listbooksV);
 
 
 
