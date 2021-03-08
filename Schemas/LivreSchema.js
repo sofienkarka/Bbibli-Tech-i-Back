@@ -7,7 +7,7 @@ const LivreSchema =new Schema({
     anneeEdition:{type:Number,required:true},
     categorie:{type:String,required:true},
     langue:{type:String,required:true},
-    images: {type:String,required:true},
+    images: {type:String,required:false},
     stock:{type:Number,required:true},
     prix:{type:Number,required:true},
     etat:{type:String,required:true}
