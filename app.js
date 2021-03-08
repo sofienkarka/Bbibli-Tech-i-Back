@@ -1,30 +1,26 @@
 const db=require('./DataBase/Connect')
 const express = require('express');
+const bodyParser=require('body-parser')
 const app=express();
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const LivresAPI=require('./Routes/LivreAPI')
-
-
+const CategoryAPI=require('./Routes/CategoryAPI')
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+
+ 
 app.use('/Livres',LivresAPI);
-
-
-
-
-
-
-
-
+app.use('/Category',CategoryAPI);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
   });
-  
+
+
   // error handler
   app.use(function(err, req, res, next) {
     // set locals, only providing error in development
