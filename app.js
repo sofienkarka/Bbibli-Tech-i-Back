@@ -10,7 +10,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
-
+app.use('/uploads', express.static('uploads'));
  
 app.use('/Livres',LivresAPI);
 app.use('/Category',CategoryAPI);
