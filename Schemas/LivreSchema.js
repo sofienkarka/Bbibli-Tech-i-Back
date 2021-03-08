@@ -9,6 +9,7 @@ const LivreSchema =new Schema({
     langue:{type:String,required:true},
     images: {type:String,required:true},
     stock:{type:Number,required:true},
+    prix:{type:Number,required:true},
     etat:{type:String,required:true}
 })
 module.exports= mongoose.model('Livres', LivreSchema);

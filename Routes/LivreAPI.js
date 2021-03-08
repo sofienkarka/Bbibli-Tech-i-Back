@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Livres=require('../Schemas/LivreSchema');
 const multer = require('multer');
-const path=require('path');
+// const path=require('path');
+const formidable = require('formidable');
 
 
 //Upload Image
@@ -12,12 +13,14 @@ destination: function(req, file, cb) {
     cb(null, './uploads/');
   },
   filename: function(req, file, cb) {
+    // const data = JSON.parse(req.body)
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
   }
 });
 
 const fileFilter = (req, file, cb) => {
   // reject a file
+
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'||file.mimetype=='image/jpg') {
     cb(null, true);
   } else {
@@ -32,35 +35,40 @@ const uploads = multer({
     fileFilter: fileFilter
   });
   
-
+  // uploads.single('image'),
 //Ajouter un nouveau livre
-router.post('/addLivre',uploads.single('image'),async(req,res)=>{
-    const livre = new Livres({
-        titre: req.body.titre,
-        auteur:req.body.auteur,
-        maisonEdition:req.body.maisonEdition,
-        anneeEdition:req.body.anneeEdition,
-        categorie:req.body.categorie,
-        langue:req.body.langue,
-        images:req.file.path,
-        stock:req.body.stock,
-        etat:req.body.etat
-    })
- 
-   await livre.save();
+router.post('/addLivre',uploads.single('images'), async(req,res)=>{
+  var form = new formidable.IncomingForm();
+console.log(req.body);
 
-    res.json({
-        livre: livre,
-        message:"Livre créé avec succes"
-    })
+   //form.parse(req, (err, fields, files) => {
+
+    const livre = new Livres({
+      titre: req.body.titre,
+      auteur:req.body.auteur,
+      maisonEdition:req.body.maisonEdition,
+      anneeEdition:req.body.anneeEdition,
+      categorie:req.body.categorie,
+      langue:req.body.langue,
+      images:req.file.path,
+      stock:req.body.stock,
+      prix:req.body.prix,
+      etat:req.body.etat
+  })
+
+  livre.save();
+   // res.writeHead(200, { 'content-type': 'application/json' });
+    res.json(livre);
+  //}); 
+   
 })
 
 //Avoir la liste de tous les livres
 router.get('/Livres',async(req,res)=>{
   const founds= await Livres.find()
-    res.json({
-        message:'Liste de tous les livres affichée avec succés', founds
-    })
+    res.json(
+       founds
+    )
 })
 
 //Avoir un live avec son id
@@ -88,5 +96,12 @@ res.json({
 console.log(UpdatedLivre);
 })
 
-
+router.post('/test',async(req,res)=>{
+  var form = new formidable.IncomingForm();
+  form.parse(req, (err, fields, files) => {
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ fields, files }, null, 2));
+  });
+})
 module.exports = router;
+ 

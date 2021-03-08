@@ -1,11 +1,21 @@
 const db=require('./DataBase/Connect')
 const express = require('express');
+
+const bodyParser=require('body-parser')
 const cors = require('cors')
+
 const app=express();
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const authAPI = require ('./Routes/authAPI')
 const LivresAPI=require('./Routes/LivreAPI')
+
+const CategoryAPI=require('./Routes/CategoryAPI')
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+
 const listbooksV=require('./Routes/listbooksV')
 
 
@@ -27,11 +37,16 @@ app.use('/Livres',LivresAPI);
 
 
 
+ 
+app.use('/Livres',LivresAPI);
+app.use('/Category',CategoryAPI);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
   });
-  
+
+
   // error handler
   app.use(function(err, req, res, next) {
     // set locals, only providing error in development
