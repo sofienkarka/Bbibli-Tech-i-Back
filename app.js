@@ -1,16 +1,43 @@
 const db=require('./DataBase/Connect')
 const express = require('express');
+
 const bodyParser=require('body-parser')
+// const cors = require('cors')
+
 const app=express();
 // const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const authAPI = require ('./Routes/authAPI')
 const LivresAPI=require('./Routes/LivreAPI')
+
 const CategoryAPI=require('./Routes/CategoryAPI')
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
+
+// const listbooksV=require('./Routes/listbooksV')
+
+
+// app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+// app.use(cookieParser());
+// app.use('/auth', authAPI);
+
+app.use('/Livres',LivresAPI);
+// app.use('/listbooksV',listbooksV);
+
+
+
+
+
+
+
+
+
  
 app.use('/Livres',LivresAPI);
 app.use('/Category',CategoryAPI);
