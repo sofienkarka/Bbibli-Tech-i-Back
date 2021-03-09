@@ -3,7 +3,6 @@ const router = express.Router();
 const Livres=require('../Schemas/LivreSchema');
 const multer = require('multer');
 // const path=require('path');
-const formidable = require('formidable');
 
 
 //Upload Image
@@ -38,7 +37,6 @@ const uploads = multer({
   // uploads.single('image'),
 //Ajouter un nouveau livre
 router.post('/addLivre',uploads.single('images'), async(req,res)=>{
-  var form = new formidable.IncomingForm();
 console.log(req.body);
 
    //form.parse(req, (err, fields, files) => {
@@ -56,7 +54,7 @@ console.log(req.body);
       etat:req.body.etat
   })
 
-  livre.save();
+  await livre.save();
    // res.writeHead(200, { 'content-type': 'application/json' });
     res.json(livre);
   //}); 
@@ -114,12 +112,5 @@ router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
   })
 
 
-router.post('/test',async(req,res)=>{
-  var form = new formidable.IncomingForm();
-  form.parse(req, (err, fields, files) => {
-    res.writeHead(200, { 'content-type': 'application/json' });
-    res.end(JSON.stringify({ fields, files }, null, 2));
-  });
-})
 module.exports = router;
  
