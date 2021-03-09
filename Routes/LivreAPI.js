@@ -70,7 +70,7 @@ router.get('/Livres',async(req,res)=>{
 })
 
 //Avoir un live avec son id
-router.get('/Livres/:id',async(req,res)=>{
+router.get('/Livres/:id',uploads.single('images'),async(req,res)=>{
     const found= await Livres.findById(req.params.id)
       res.json({
           message:'Livre trouvé avec succés', found
@@ -86,13 +86,31 @@ router.get('/Livres/:id',async(req,res)=>{
   })
 
   //Update Données livre
-router.put('/UpdateLivre/:id',async(req,res)=>{
-const UpdatedLivre=await Livres.findByIdAndUpdate(req.params.id,req.body,{new:true})
-res.json({
-    message:'Livre updated avec succes',UpdatedLivre
-})
-console.log(UpdatedLivre);
-})
+router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
+  Livres.findById(req.params.id).then(livre=>{
+    livre.titre=req.body.titre,
+    livre.auteur=req.body.auteur,
+    livre.maisonEdition=req.body.maisonEdition,
+    livre.anneeEdition=req.body.anneeEdition,
+    livre.categorie=req.body.categorie;
+    livre.langue=req.body.langue,
+    livre.stock=req.body.stock,
+    livre.prix=req.body.prix,
+    livre.etat=req.body.etat
+    if(req.file){
+      livre.images=req.file.path
+             }
+             else if(req.file=='undefined'){
+                livre.images=req.body.images
+
+             };
+    return livre.save()
+}).then(
+  res.json("livre updated ")
+)
+
+  })
+
 
 module.exports = router;
  
