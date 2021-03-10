@@ -51,7 +51,7 @@ console.log(req.body);
       images:req.file.path,
       stock:req.body.stock,
       prix:req.body.prix,
-      etat:req.body.etat
+      type:req.body.type
   })
 
   await livre.save();
@@ -70,7 +70,7 @@ router.get('/Livres',async(req,res)=>{
 })
 
 //Avoir un live avec son id
-router.get('/Livres/:id',uploads.single('images'),async(req,res)=>{
+router.get('/Livres/:id',async(req,res)=>{
     const found= await Livres.findById(req.params.id)
       res.json({
           message:'Livre trouvé avec succés', found
@@ -87,7 +87,8 @@ router.get('/Livres/:id',uploads.single('images'),async(req,res)=>{
 
   //Update Données livre
 router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
-  Livres.findById(req.params.id).then(livre=>{
+ 
+Livres.findById(req.params.id).then(livre=>{
     livre.titre=req.body.titre,
     livre.auteur=req.body.auteur,
     livre.maisonEdition=req.body.maisonEdition,
@@ -96,7 +97,7 @@ router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
     livre.langue=req.body.langue,
     livre.stock=req.body.stock,
     livre.prix=req.body.prix,
-    livre.etat=req.body.etat
+    livre.type=req.body.type
     if(req.file){
       livre.images=req.file.path
              }
@@ -106,9 +107,8 @@ router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
              };
     return livre.save()
 }).then(
-  res.json("livre updated ")
+  res.json("livre updated"),
 )
-
   })
 
 
