@@ -51,7 +51,7 @@ console.log(req.body);
       images:req.file.path,
       stock:req.body.stock,
       prix:req.body.prix,
-      etat:req.body.etat
+      type:req.body.type
   })
 
   await livre.save();
@@ -86,13 +86,31 @@ router.get('/Livres/:id',async(req,res)=>{
   })
 
   //Update Données livre
-router.put('/UpdateLivre/:id',async(req,res)=>{
-const UpdatedLivre=await Livres.findByIdAndUpdate(req.params.id,req.body,{new:true})
-res.json({
-    message:'Livre updated avec succes',UpdatedLivre
-})
-console.log(UpdatedLivre);
-})
+router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
+ 
+Livres.findById(req.params.id).then(livre=>{
+    livre.titre=req.body.titre,
+    livre.auteur=req.body.auteur,
+    livre.maisonEdition=req.body.maisonEdition,
+    livre.anneeEdition=req.body.anneeEdition,
+    livre.categorie=req.body.categorie;
+    livre.langue=req.body.langue,
+    livre.stock=req.body.stock,
+    livre.prix=req.body.prix,
+    livre.type=req.body.type
+    if(req.file){
+      livre.images=req.file.path
+             }
+             else if(req.file=='undefined'){
+                livre.images=req.body.images
+
+             };
+    return livre.save()
+}).then(
+  res.json("livre updated"),
+)
+  })
+
 
 module.exports = router;
  
