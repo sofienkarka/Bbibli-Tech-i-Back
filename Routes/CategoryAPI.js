@@ -1,5 +1,4 @@
 const express = require('express');
-const { findById } = require('../Schemas/CategorySchema');
 const router = express.Router();
 const Category=require('../Schemas/CategorySchema');
 

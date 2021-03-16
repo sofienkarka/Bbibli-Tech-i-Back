@@ -51,7 +51,7 @@ console.log(req.body);
       images:req.file.path,
       stock:req.body.stock,
       prix:req.body.prix,
-      etat:req.body.etat
+      type:req.body.type
   })
 
   await livre.save();
@@ -63,10 +63,12 @@ console.log(req.body);
 
 //Avoir la liste de tous les livres
 router.get('/Livres',async(req,res)=>{
-  const founds= await Livres.find()
-    res.json(
-       founds
-    )
+    Livres.find().then(livre=>{
+      res.json(livre)
+
+    }).catch(err=>{
+      console.log(err);
+    })
 })
 
 //Avoir un live avec son id
@@ -96,7 +98,7 @@ router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
     livre.langue=req.body.langue,
     livre.stock=req.body.stock,
     livre.prix=req.body.prix,
-    livre.etat=req.body.etat
+    livre.type=req.body.type
     if(req.file){
       livre.images=req.file.path
              }
