@@ -10,7 +10,9 @@ const LivreSchema =new Schema({
     images: {type:String,required:false},
     stock:{type:Number,required:true},
     prix:{type:Number,required:true},
+
     type:{type:String,required:true},
     cardCount:{type:Number,default:1}
+
 })
 module.exports= mongoose.model('Livres', LivreSchema);
