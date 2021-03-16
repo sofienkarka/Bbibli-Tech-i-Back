@@ -43,7 +43,9 @@ router.post('/login', async(req,res) =>{
                     userId:userConnected._id
                 }
                 const createdToken = jwt.sign(data,'secret',{expiresIn:"1m"});
-                res.json({user:userConnected,token:createdToken});
+
+                res.json({user:userConnected,token:createdToken,userId:userConnected._id});
+
             }
             else{
                 res.json({message:"user not found"})

@@ -63,10 +63,12 @@ console.log(req.body);
 
 //Avoir la liste de tous les livres
 router.get('/Livres',async(req,res)=>{
-  const founds= await Livres.find()
-    res.json(
-       founds
-    )
+    Livres.find().then(livre=>{
+      res.json(livre)
+
+    }).catch(err=>{
+      console.log(err);
+    })
 })
 
 //Avoir un live avec son id
