@@ -37,13 +37,13 @@ router.post('/login', async(req,res) =>{
     }
     else{
         bcrypt.compare(req.body.password,userConnected.password, function(err,result){
-            if(result=true){
+            if(result){
                 const data ={
                     email:userConnected.email,
                     userId:userConnected._id
                 }
                 const createdToken = jwt.sign(data,'secret',{expiresIn:"1m"});
-                res.json({user:userConnected,token:createdToken,userId:userConnected._id});
+                res.json({userName:userConnected.name,user:userConnected,token:createdToken,userId:userConnected._id});
             }
             else{
                 res.json({message:"user not found"})
@@ -51,6 +51,27 @@ router.post('/login', async(req,res) =>{
         })
      }
 });
+
+router.post('/userSuit',async(req,res)=>{
+    console.log(req.body)
+   await Users.findOne({email:req.body.email}).then(user=>{
+       user.firstName=req.body.firstName,
+       user.lastName=req.body.lastName,
+       user.middleName=req.body.middleName,
+       user.compagny=req.body.middleName,
+       user.phone=req.body.phone,
+       user.country=req.body.country.name,
+       user.city=req.body.city,
+       user. state=req.body. state,
+       user.zip=req.body.zip,
+       user.address=req.body.address;
+       return user.save()
+   }).then(res.json('user updated')) 
+   
+       
+    
+})
+
     
   
 
