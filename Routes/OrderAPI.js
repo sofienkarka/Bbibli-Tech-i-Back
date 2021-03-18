@@ -8,8 +8,14 @@ const idOrder=orderid.generate()
 //avoir la liste de toutes les commandes
 
 router.get('/Orders',async(req,res)=>{
- await Orders.find();
- res.json({message:'toutes les commandes chargées avec succés'})
+ orders=await Orders.find().populate({
+     path:'products',
+     populate:{
+         path:'product',
+         model:'Livres'
+     }
+ });
+ res.json(orders)
 
 })
 
@@ -23,7 +29,7 @@ router.post('/addOrder',async(req,res)=>{
 const order = new Orders({
     NumOrder:idOrder,
     Total:req.body.total,
-    
+    date:req.body.date,
     status:"en cours",
     DeliveryMethod:req.body.DeliveryMethod,
     CardNumber:req.body.CardNumber,
@@ -46,8 +52,19 @@ req.body.products.forEach(async (element) => {
    res.json('commande ajoutee')
 })
 
+router.put('/UpdateOrder/:id',async(req,res)=>{
+    console.log(req.body);
+Orders.findById(req.params.id).then(order=>{
+    order.status=req.body.status;
+    order.save()
+}).then(res.json("commande on hold"))
 
+});
 
+router.get('/UserOrders',(req,res)=>{
+    console.log(req.body);
+
+})
 
 
 

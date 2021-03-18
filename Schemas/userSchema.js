@@ -5,15 +5,17 @@ const userSchema  =new Schema({
     name : String,
     email : String,
     password : String,
-    lastname : String,
+    firstName:String,
+    lastName : String,
     middleName : String,
     compagny : String,
     phone : Number,
     country : String,
     city : String,
-    stateprovince : String,
-    zippostalcode : Number,
-    adress : String
+    state : String,
+    zip : Number,
+    address : String,
+    // _id:Schema.Types.ObjectId
 });
 
 module.exports=mongoose.model('User',userSchema);

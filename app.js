@@ -39,12 +39,9 @@ app.use('/Orders',OrdersAPI)
 
 
 app.use('/uploads', express.static('uploads'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
 app.use('/auth', authAPI);
-app.use('/Livres',LivresAPI);
-// app.use('/listbooksV',listbooksV); 
-
 app.use('/Livres',LivresAPI);
 app.use('/Category',CategoryAPI);
 
