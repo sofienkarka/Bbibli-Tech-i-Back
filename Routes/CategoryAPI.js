@@ -11,7 +11,7 @@ category.save()
 res.json(category)
 })
 
-router.get('/getCategory', async(req,res)=>{
+router.get('/getCategorys', async(req,res)=>{
     const getCategory = await Category.find()
     res.json(getCategory)
 })

@@ -1,6 +1,7 @@
 const db=require('./DataBase/Connect')
 const express = require('express');
 
+
 const cors = require('cors')
 const listbooksV=require('./Routes/listbooksV')
 
@@ -15,23 +16,17 @@ app.use(express.json());
 
 app.use('/uploads', express.static('uploads'));
 
-
-
-
-
-
-
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 // app.use(cookieParser());
 
 
-app.use('/auth', authAPI);
+
 
 app.use('/category',CategoryAPI)
-app.use('/Livres',LivresAPI);
 app.use('/listbooksV',listbooksV);
 
 app.use('/Orders',OrdersAPI)
@@ -42,7 +37,11 @@ app.use('/Orders',OrdersAPI)
 
 
 
- 
+
+app.use('/uploads', express.static('uploads'));
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+app.use('/auth', authAPI);
 app.use('/Livres',LivresAPI);
 app.use('/Category',CategoryAPI);
 
