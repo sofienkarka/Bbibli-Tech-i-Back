@@ -15,7 +15,6 @@ const userSchema  =new Schema({
     state : String,
     zip : Number,
     address : String,
-    // _id:Schema.Types.ObjectId
 });
 
 module.exports=mongoose.model('User',userSchema);
