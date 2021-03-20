@@ -75,7 +75,7 @@ router.get('/Livres',async(req,res)=>{
 router.get('/Livres/:id',async(req,res)=>{
     const found= await Livres.findById(req.params.id)
       res.json({
-          message:'Livre trouvé avec succés', found
+           found
       })
   })
 

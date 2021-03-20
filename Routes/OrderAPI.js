@@ -4,7 +4,7 @@ const Orders=require('../Schemas/OrderSchema');
 const Product=require('../Schemas/LivreSchema');
 const orderid=require('order-id') ('mysecret')
 const idOrder=orderid.generate()
-
+const {authMiddleWare}=require('../JwtConfig/jwt')
 //avoir la liste de toutes les commandes
 
 router.get('/Orders',async(req,res)=>{
@@ -52,7 +52,7 @@ req.body.products.forEach(async (element) => {
    res.json('commande ajoutee')
 })
 
-router.put('/UpdateOrder/:id',async(req,res)=>{
+router.put('/UpdateOrder/:id',authMiddleWare,async(req,res)=>{
     console.log(req.body);
 Orders.findById(req.params.id).then(order=>{
     order.status=req.body.status;
