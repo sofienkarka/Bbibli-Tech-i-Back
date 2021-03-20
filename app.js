@@ -11,6 +11,7 @@ const authAPI = require ('./Routes/authAPI')
 const LivresAPI=require('./Routes/LivreAPI')
 const OrdersAPI=require('./Routes/OrderAPI')
 const CategoryAPI=require('./Routes/CategoryAPI')
+const mail=require('./Routes/mail')
 app.use(logger('dev'));
 app.use(express.json());
 
@@ -42,6 +43,7 @@ app.use('/uploads', express.static('uploads'));
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use('/auth', authAPI);
+app.use('/mail', mail);
 app.use('/Livres',LivresAPI);
 app.use('/Category',CategoryAPI);
 
