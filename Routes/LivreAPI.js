@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Livres=require('../Schemas/LivreSchema');
 const multer = require('multer');
+const {authMiddleWare}=require('../JwtConfig/jwt')
 // const path=require('path');
 
 
@@ -36,7 +37,7 @@ const uploads = multer({
   
   // uploads.single('image'),
 //Ajouter un nouveau livre
-router.post('/addLivre',uploads.single('images'), async(req,res)=>{
+router.post('/addLivre',uploads.single('images'),authMiddleWare, async(req,res)=>{
 console.log(req.body);
 
    //form.parse(req, (err, fields, files) => {
@@ -80,7 +81,7 @@ router.get('/Livres/:id',async(req,res)=>{
   })
 
   //Supprimer un livre de la base
-  router.delete('/delLivre/:id',async(req,res)=>{
+  router.delete('/delLivre/:id',authMiddleWare,async(req,res)=>{
    await Livres.findByIdAndDelete(req.params.id)
    res.json({
     message:'Livre supprimé avec succés'
@@ -88,7 +89,7 @@ router.get('/Livres/:id',async(req,res)=>{
   })
 
   //Update Données livre
-router.put('/UpdateLivre/:id',uploads.single('images'),async(req,res)=>{
+router.put('/UpdateLivre/:id',uploads.single('images'),authMiddleWare,async(req,res)=>{
  
 Livres.findById(req.params.id).then(livre=>{
     livre.titre=req.body.titre,

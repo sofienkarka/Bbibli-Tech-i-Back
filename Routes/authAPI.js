@@ -42,7 +42,7 @@ router.post('/login', async(req,res) =>{
                     email:userConnected.email,
                     userId:userConnected._id
                 }
-                const createdToken = jwt.sign(data,'secret',{expiresIn:"5m"});
+                const createdToken = jwt.sign(data,'secret',{expiresIn:"1h"});
                 res.json({userName:userConnected.name,user:userConnected,token:createdToken,userId:userConnected._id});
             }
             else{

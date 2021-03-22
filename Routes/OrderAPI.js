@@ -13,7 +13,7 @@ const ejs = require('ejs');
 const {authMiddleWare}=require('../JwtConfig/jwt')
 //avoir la liste de toutes les commandes
 
-router.get('/Orders',async(req,res)=>{
+router.get('/Orders',authMiddleWare,async(req,res)=>{
  orders=await Orders.find().populate({
      path:'products',
      populate:{
@@ -30,7 +30,7 @@ router.get('/Orders/:id',async(req,res)=>{
     res.json(found)
 })
 
-router.post('/addOrder',async(req,res)=>{
+router.post('/addOrder',authMiddleWare,async(req,res)=>{
 
 const order = new Orders({
     NumOrder:idOrder,
