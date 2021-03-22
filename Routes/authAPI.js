@@ -37,7 +37,7 @@ router.post('/login', async(req,res) =>{
     }
     else{
         bcrypt.compare(req.body.password,userConnected.password, function(err,result){
-            if(result){
+            if(result=true){
                 const data ={
                     email:userConnected.email,
                     userId:userConnected._id

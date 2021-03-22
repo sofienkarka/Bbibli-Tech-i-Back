@@ -1,9 +1,15 @@
 const express = require('express');
+const nodemailer = require('nodemailer');
 const router = express.Router();
 const Orders=require('../Schemas/OrderSchema');
 const Product=require('../Schemas/LivreSchema');
+const user = require('../Schemas/userSchema')
 const orderid=require('order-id') ('mysecret')
 const idOrder=orderid.generate()
+const fs = require('fs');
+const path = require ('path');
+const ejs = require('ejs');
+
 const {authMiddleWare}=require('../JwtConfig/jwt')
 //avoir la liste de toutes les commandes
 
@@ -52,24 +58,69 @@ req.body.products.forEach(async (element) => {
    res.json('commande ajoutee')
 })
 
-router.put('/UpdateOrder/:id',authMiddleWare,async(req,res)=>{
-    console.log(req.body);
-Orders.findById(req.params.id).then(order=>{
+router.put('/UpdateOrder/:orderId',(req,res)=>{
+
+Orders.findById(req.params.orderId).populate("userId").then(order=>{
     order.status=req.body.status;
-    order.save()
-}).then(res.json("commande on hold"))
+    return order.save()
+}).then(order=>{
+   
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'nasserimen102@gmail.com',
+          pass: '14305193Gmail' // naturally, replace both with your real credentials or an application-specific password
+        }
+      
+})
+
+const template = fs.readFileSync(path.resolve('./mail', 'mail.html'), {encoding: 'utf-8'});
+
+const html = ejs.render(template, {
+  name: order.userId.name,
+  NumOrder:order.NumOrder,
+  date:order.date,
+  Total : order.Total,
+  status : order.status,
+  titre : order.titre,
+  productCount : order.productCount,
+  prix : order.prix,
+  productCount : order.productCount
+
 
 });
+      const mailOptions = {
+        from: 'nasserimen102@gmail.com',
+        to:  order.userId.email,
+        subject: 'Invoices due',
+        text: 'Dudes, we really need your money.',
+        html :html
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log("e");
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          
+        }
+      });
+}
+  
+).then(()=>{
+    res.json("message envoyé")
+}).catch(err=>{
+    console.log(err);
+    res.json(err)
+})
+
+})
+
 
 router.get('/UserOrders',(req,res)=>{
     console.log(req.body);
 
 })
-
-
-
-
-
-
 
 module.exports = router;
