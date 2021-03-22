@@ -10,22 +10,30 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
+      <h2>Hello <%= name %></h2>
     <div class="container-fluid">
-        <div class="row">
-            <h2>Bonjour <%= name %></h2>
-    <h1 class="text-center">Welcome fivePoints Team</h1>
-    <h3>Bienvenus chez nous!</h3>
-    <p>Notre progralle cotient 5 niveaux avec des cours bien expliqués</p>
-    <ul>
-        <li>Algorithmique</li>
-        <li>HTML , CSS , bootstrap</li>
-        <li>javaScript</li>
-        <li>Angular</li>
-        <li>NodeJS</li>
-    </ul>
-    <hr>
-    <a href="https://fivepoints.fr">Voici notre site web pour plus d'information</a>
-</div>
+        <div class="p-2 mt-1">
+            <h3>Order Details</h3>
+        </div>
+        <div class="mat-table orders-table" style="display: block;
+        overflow-x: auto;">
+            <div class="mat-row">
+              <P>Order Number</P><div class="mat-cell " style=" flex: 1;
+              overflow: hidden;
+              word-wrap: break-word;"><span class="order"> <strong> <%= NumOrder %></strong></span></div>
+              <P>Order Date</P><div class="mat-cell " style=" flex: 1;
+              overflow: hidden;
+              word-wrap: break-word;"> <strong><%= date %></strong></div>
+              <P>Order Total</P><div class="mat-cell " style=" flex: 1;
+              overflow: hidden;
+              word-wrap: break-word;"><strong><%= Total %>$</strong></div>
+              <P>Order Status</P><div class="mat-cell " style=" flex: 1;
+              overflow: hidden;
+              word-wrap: break-word;"><strong><%= status %></strong></div>     
+             
+            
+            </div>
+            </div>
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

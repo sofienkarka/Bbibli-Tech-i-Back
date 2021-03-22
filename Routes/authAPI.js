@@ -42,8 +42,8 @@ router.post('/login', async(req,res) =>{
                     email:userConnected.email,
                     userId:userConnected._id
                 }
-                const createdToken = jwt.sign(data,'secret',{expiresIn:"1m"});
-                res.json({user:userConnected,token:createdToken});
+                const createdToken = jwt.sign(data,'secret',{expiresIn:"5m"});
+                res.json({userName:userConnected.name,user:userConnected,token:createdToken,userId:userConnected._id});
             }
             else{
                 res.json({message:"user not found"})
@@ -52,10 +52,30 @@ router.post('/login', async(req,res) =>{
      }
 });
 
-router.get('/getAllUsers', async (req,res)=>{
-    const get = await Users.find()
-    res.json(get)
+router.post('/userSuit',async(req,res)=>{
+    console.log(req.body)
+   await Users.findOne({email:req.body.email}).then(user=>{
+       user.firstName=req.body.firstName,
+       user.lastName=req.body.lastName,
+       user.middleName=req.body.middleName,
+       user.compagny=req.body.middleName,
+       user.phone=req.body.phone,
+       user.country=req.body.country.name,
+       user.city=req.body.city,
+       user. state=req.body. state,
+       user.zip=req.body.zip,
+       user.address=req.body.address;
+       return user.save()
+   }).then(res.json('user updated')) 
+    
 })
+router.get('/User/:id',async(req,res)=>{
+    console.log(req.body);
+
+const found=await Users.findById(req.params.id)
+res.json(found)
+})
+
     
   
 
